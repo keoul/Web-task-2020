@@ -3,8 +3,8 @@ import { Switch, Redirect } from 'react-router';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider, observer, inject } from 'mobx-react';
 import { rootTree } from '../models/RootModel';
-import { LoginPage } from '../components/Auth/LoginPage';
-import { LandingPage } from '../components/LandingPage';
+import { LoginPage } from './Auth/LoginPage';
+import { LandingPage } from './LandingPage';
 
 class RouterComponent extends React.Component {
 	loginRequired = (Component) => {
