@@ -4,7 +4,7 @@ import { shotsStore } from './ShotsModel';
 //here you give the default value for your models
 export const setupRootStore = () => {
 	const authTree = authStore.create({
-		isLoggedIn: true,
+		isLoggedIn: false,
 		inProgress: false,
 		meta: '',
 	});

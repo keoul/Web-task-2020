@@ -1,11 +1,30 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { inject, observer } from 'mobx-react';
+const size = {
+	mobileS: '375px',
+	mobileM: '425px',
+	mobileL: '768px',
+	tablet: '1024px',
+	laptop: '1440px',
+	laptopL: '1560px',
+};
 
+const device = {
+	mobileS: `(max-width: ${size.mobileS})`,
+	mobileM: `(max-width: ${size.mobileM})`,
+	mobileL: `(max-width: ${size.mobileL})`,
+	tablet: `(max-width: ${size.tablet})`,
+	laptop: `(max-width: ${size.laptop})`,
+	laptopL: `(max-width: ${size.laptopL})`,
+	desktop: `(max-width: ${size.desktop})`,
+	desktopL: `(max-width: ${size.desktop})`,
+};
 const Container = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 100vh;
+	height: 100%;
 	width: 100%;
 	z-index: 20000;
 	overflow-y: hidden;
@@ -22,11 +41,21 @@ const Container = styled.div`
 		top: 30px;
 		cursor: pointer;
 	}
+	@media ${device.tablet} {
+		.cross {
+			> svg {
+				path {
+					stroke: #000;
+				}
+			}
+		}
+	}
 `;
 const InfoContainer = styled.div`
 	width: 60%;
 	max-width: 840px;
 	margin: 100px auto;
+
 	background-color: #fff;
 	padding: 30px;
 	border-radius: 10px;
@@ -55,9 +84,11 @@ const InfoContainer = styled.div`
 		}
 		.button {
 			text-align: center;
+			transition: all 0.3s ease-in;
 			font-size: 14px;
 			box-sizing: border-box;
 			align-self: center;
+			cursor: pointer;
 			background-color: #ccc;
 			border-radius: 5px;
 			padding: 10px;
@@ -65,6 +96,10 @@ const InfoContainer = styled.div`
 			> span {
 				align-self: center;
 			}
+		}
+		.liked {
+			background: #ff3dc9;
+			color: #fff;
 		}
 	}
 	.shot-thumbnail {
@@ -111,6 +146,57 @@ const InfoContainer = styled.div`
 			}
 		}
 	}
+	@media ${device.tablet} {
+		width: 100%;
+		height: 100%;
+		max-width: 100vw;
+		margin: 0;
+		box-sizing: border-box;
+		border-radius: 0;
+
+		.header {
+			margin-top: 50px;
+		}
+		.grid-wrap {
+			display: block;
+			.left {
+				border-bottom: 1px solid #ccc;
+				margin-bottom: 20px;
+				.desc {
+					font-size: 18px;
+					font-weight: 300;
+				}
+			}
+			.right {
+				button {
+					display: block;
+					width: 100%;
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+	@media ${device.mobileM} {
+		padding: 10px;
+		.header {
+			grid-template-columns: 1fr 11fr;
+			grid-template-rows: 1fr 1fr;
+
+			img {
+				height: 25px;
+				grid-rows: 2;
+			}
+			.title {
+				font-size: 18px;
+			}
+			.author {
+				font-size: 16px;
+			}
+			.button {
+				max-width: 70px;
+			}
+		}
+	}
 `;
 class ShotDetailed extends Component {
 	constructor(props) {
@@ -132,14 +218,15 @@ class ShotDetailed extends Component {
 			is_rebound,
 			rebounds_count,
 			attachments_count,
-			views_count,
+			view_count,
 			comments_count,
 			likes_count,
 			liked,
 			image_link,
 			desc,
 			avatar,
-			author,
+			following,
+			username,
 		} = this.props;
 		return (
 			<Container className={'hide descId' + this.props.id}>
@@ -181,18 +268,44 @@ class ShotDetailed extends Component {
 									<span>
 										by{' '}
 										<span className='author'>
-											{author + ' '}
+											{username + ' '}
 										</span>
 										|{' '}
-										<span className='author'> Follow</span>
+										{following ? (
+											<span
+												className='author'
+												onClick={(e) => {
+													this.props.rootTree.shotsStore.follow(
+														id
+													);
+												}}>
+												Following
+											</span>
+										) : (
+											<span
+												className='author'
+												onClick={(e) => {
+													this.props.rootTree.shotsStore.follow(
+														id
+													);
+												}}>
+												Follow
+											</span>
+										)}
 									</span>
 								</div>
 							</div>
 							<div className='button'>
 								<span>Save</span>
 							</div>
-							<div className='button'>
-								<span>
+							<div className={liked ? 'liked button' : 'button'}>
+								<span
+									className={liked ? 'liked' : ''}
+									onClick={(e) => {
+										this.props.rootTree.shotsStore.likeShot(
+											id
+										);
+									}}>
 									<i class='fas fa-heart'></i> Like
 								</span>
 							</div>
@@ -210,7 +323,7 @@ class ShotDetailed extends Component {
 								<hr></hr>
 								<div className='comments'>
 									<div className='count'>
-										{comments_count} Responses
+										{comments_count} Comments
 									</div>
 								</div>
 							</div>
@@ -238,6 +351,11 @@ class ShotDetailed extends Component {
 										{'   '}
 										{published_at}
 									</div>
+									<div>
+										<i class='fas fa-eye'></i>
+										{'   '}
+										{view_count} Views
+									</div>
 								</div>
 							</div>
 						</div>
@@ -247,5 +365,5 @@ class ShotDetailed extends Component {
 		);
 	}
 }
-
+ShotDetailed = inject('rootTree')(observer(ShotDetailed));
 export { ShotDetailed };

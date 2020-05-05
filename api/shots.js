@@ -10,6 +10,7 @@ const shots = [
 		view_count: 8370,
 		comments_count: 25,
 		likes_count: 292,
+		following: false,
 		liked: false,
 		image_link:
 			'https://cdn.dribbble.com/users/427857/screenshots/11278841/food_for_learning.jpg',
@@ -29,6 +30,7 @@ const shots = [
 		attachments_count: 0,
 		view_count: 5203,
 		comments_count: 10,
+		following: false,
 		likes_count: 125,
 		liked: false,
 		image_link:
@@ -50,6 +52,7 @@ const shots = [
 		view_count: 14487,
 		comments_count: 7,
 		likes_count: 319,
+		following: true,
 		liked: false,
 		username: 'User is cool',
 		image_link:
@@ -70,6 +73,7 @@ const shots = [
 		view_count: 3178,
 		comments_count: 1,
 		likes_count: 118,
+		following: false,
 		liked: false,
 		username: 'qlodge',
 		image_link:
@@ -90,6 +94,7 @@ const shots = [
 		view_count: 11065,
 		comments_count: 11,
 		likes_count: 211,
+		following: true,
 		liked: false,
 		username: 'IIOO',
 		image_link:
@@ -108,6 +113,7 @@ const shots = [
 		attachments_count: 0,
 		view_count: 6179,
 		comments_count: 10,
+		following: false,
 		likes_count: 127,
 		liked: false,
 		username: 'UsernoCool',
@@ -129,6 +135,7 @@ const shots = [
 		view_count: 4356,
 		comments_count: 10,
 		likes_count: 108,
+		following: false,
 		liked: false,
 		username: 'alesnesetril',
 		image_link:
@@ -150,6 +157,7 @@ const shots = [
 		comments_count: 2,
 		likes_count: 140,
 		liked: false,
+		following: false,
 		username: 'Tubik',
 		image_link:
 			'https://cdn.dribbble.com/users/418188/screenshots/11282023/interior_design_project_website_tubik_2x.png',
@@ -169,6 +177,7 @@ const shots = [
 		view_count: 5000,
 		comments_count: 2,
 		likes_count: 126,
+		following: true,
 		liked: false,
 		username: 'KeWlBoI',
 		image_link:
@@ -186,6 +195,7 @@ const shots = [
 		is_rebound: false,
 		rebounds_count: 0,
 		attachments_count: 0,
+		following: false,
 		view_count: 2056,
 		comments_count: 5,
 		likes_count: 129,
@@ -208,6 +218,7 @@ const shots = [
 		view_count: 5049,
 		comments_count: 0,
 		likes_count: 104,
+		following: true,
 		liked: false,
 		username: 'Yeet pt2',
 		image_link:
@@ -229,6 +240,7 @@ const shots = [
 		likes_count: 154,
 		liked: false,
 		username: 'Sochnik',
+		following: true,
 		image_link:
 			'https://cdn.dribbble.com/users/501822/screenshots/11279714/1.png',
 		desc:

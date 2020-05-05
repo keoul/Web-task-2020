@@ -2,6 +2,26 @@ import React, { Component } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { ShotDetailed } from './ShotDetailed';
 
+import { inject, observer } from 'mobx-react';
+const size = {
+	mobileS: '375px',
+	mobileM: '425px',
+	mobileL: '768px',
+	tablet: '1024px',
+	laptop: '1440px',
+	laptopL: '1560px',
+};
+
+const device = {
+	mobileS: `(max-width: ${size.mobileS})`,
+	mobileM: `(max-width: ${size.mobileM})`,
+	mobileL: `(max-width: ${size.mobileL})`,
+	tablet: `(max-width: ${size.tablet})`,
+	laptop: `(max-width: ${size.laptop})`,
+	laptopL: `(max-width: ${size.laptopL})`,
+	desktop: `(max-width: ${size.desktop})`,
+	desktopL: `(max-width: ${size.desktop})`,
+};
 const show = keyframes`
 	0%{
 		opacity: 0;
@@ -94,6 +114,7 @@ const Container = styled.div`
 
 		.user {
 			align-self: middle;
+			font-weight: 600;
 		}
 		.comments {
 			margin-right: 7px;
@@ -105,6 +126,18 @@ const Container = styled.div`
 	}
 	.hide {
 		display: none;
+	}
+	@media ${device.tablet} {
+		.info-container {
+			font-size: 19px;
+			margin-top: 10px;
+		}
+	}
+	@media ${device.mobileL} {
+		margin-bottom: 20px;
+		.info-container {
+			font-size: 15px;
+		}
 	}
 `;
 class ShotCard extends Component {
@@ -158,7 +191,7 @@ class ShotCard extends Component {
 			is_rebound,
 			rebounds_count,
 			attachments_count,
-			views_count,
+			view_count,
 			comments_count,
 			likes_count,
 			liked,
@@ -166,6 +199,7 @@ class ShotCard extends Component {
 			desc,
 			avatar,
 			username,
+			following,
 		} = this.props;
 		return (
 			<Container>
@@ -210,11 +244,12 @@ class ShotCard extends Component {
 							</span>
 							{comments_count}
 						</span>
-						<span className='likes'>
-							<span
-								style={{
-									color: liked ? '#ff3dc9' : '#ccc',
-								}}>
+						<span
+							className='likes'
+							style={{
+								color: liked ? '#ff3dc9' : '#ccc',
+							}}>
+							<span>
 								<i class='fas fa-heart'></i>
 							</span>
 							{likes_count}
@@ -228,18 +263,19 @@ class ShotCard extends Component {
 					is_rebound={is_rebound}
 					rebounds_count={rebounds_count}
 					attachments_count={attachments_count}
-					views_count={views_count}
+					view_count={view_count}
 					comments_count={comments_count}
 					likes_count={likes_count}
 					liked={liked}
 					image_link={image_link}
 					desc={desc}
 					avatar={avatar}
-					author='UIXNinjs'
+					username={username}
+					following={following}
 				/>
 			</Container>
 		);
 	}
 }
-
+ShotCard = inject('rootTree')(observer(ShotCard));
 export { ShotCard };

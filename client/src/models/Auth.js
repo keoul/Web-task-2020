@@ -20,27 +20,21 @@ const authStore = types
 	}))
 	.actions((self) => {
 		function setMeta(value) {
-			applySnapshot(self, { ...self, meta: value });
+			self.meta = value;
 		}
 
 		function progressing(value) {
-			applySnapshot(self, { ...self, inProgress: value });
+			self.inProgress = value;
 		}
 
 		function _setLoginState(value) {
-			applySnapshot(self, { ...self, isLoggedIn: value });
+			self.isLoggedIn = value;
 		}
 
 		function logout() {
 			progressing(true);
-			// fetch('/api/logout')
-			// 	.then(res => res.json())
-			// 	.then(({ success }) => {
-			// 		if (success) {
-			// 			progressing(false);
-			// 			_setLoginState(false);
-			// 		}
-			// 	});
+			_setLoginState(false);
+			progressing(false);
 		}
 
 		function login(email, password) {
@@ -65,36 +59,6 @@ const authStore = types
 			progressing(false);
 			_setLoginState(true);
 			console.log('Logged in');
-			// fetch('/login').then((res) => console.log(res));
-			// fetch('/api/login', {
-			//     method: 'POST',
-			//     headers: {
-			//         'Content-Type': 'application/json',
-			//     },
-			//     body: JSON.stringify({ email: email, password: password }),
-			// })
-			//     .then(res => {
-			//         if (res.status === 200) {
-			//             return res.json();
-			//         } else if (res.status === 401) {
-			//             setMeta('You have entered an incorrect Email/Password');
-			//             progressing(false);
-			//             return;
-			//         } else {
-			//             setMeta('Something went wrong. Please try again!');
-			//             progressing(false);
-			//             return;
-			//         }
-			//     })
-			//     .then(({ success, data }) => {
-			//         if (success) {
-			//             _setLoginState(true);
-			//             progressing(false);
-			//         }
-			//     })
-			//     .catch(error => {
-			//         console.log(error);
-			//     });
 		}
 
 		return {

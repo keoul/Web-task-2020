@@ -5,6 +5,26 @@ import styled from 'styled-components';
 import { IECSElogologin } from '../IECSELogo.login';
 import { Spinner } from '../Spinner';
 
+const size = {
+	mobileS: '375px',
+	mobileM: '425px',
+	mobileL: '768px',
+	tablet: '1024px',
+	laptop: '1440px',
+	laptopL: '1560px',
+};
+
+const device = {
+	mobileS: `(max-width: ${size.mobileS})`,
+	mobileM: `(max-width: ${size.mobileM})`,
+	mobileL: `(max-width: ${size.mobileL})`,
+	tablet: `(max-width: ${size.tablet})`,
+	laptop: `(max-width: ${size.laptop})`,
+	laptopL: `(max-width: ${size.laptopL})`,
+	desktop: `(max-width: ${size.desktop})`,
+	desktopL: `(max-width: ${size.desktop})`,
+};
+
 const Container = styled.div`
 	position: relative;
 	width: 100vw;
@@ -12,12 +32,14 @@ const Container = styled.div`
 `;
 
 const LoginBox = styled.div`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	width: 40%;
 	height: 60%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
 	text-align: center;
 	box-shadow: 1px 4px 17px rgba(0, 0, 0, 0.11);
 	border-radius: 10px;
@@ -61,6 +83,24 @@ const LoginBox = styled.div`
 		font-weight: 600;
 		margin-bottom: 30px;
 		color: #ff0800;
+	}
+	@media ${device.mobileS}, ${device.tablet} {
+		width: 100vw;
+		min-height: 100vh;
+		overflow-y: scroll;
+		padding-top: 100px;
+		.subheading {
+			font-size: 22px;
+		}
+
+		input {
+			font-size: 14px;
+		}
+
+		button {
+			height: 50px;
+			font-size: 14px;
+		}
 	}
 `;
 class LoginPage extends Component {

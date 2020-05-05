@@ -182,7 +182,6 @@ class UserSettings extends React.Component {
 	render() {
 		const { rootTree } = this.props;
 		if (!rootTree) return null;
-		var windowWidth = window.innerWidth;
 		return (
 			<Container
 				style={{

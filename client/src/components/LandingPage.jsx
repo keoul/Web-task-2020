@@ -5,6 +5,25 @@ import { Header } from './Header';
 import styled from 'styled-components';
 import { ShotCard } from './ShotCard';
 import { UserSettings } from './UserSettings';
+const size = {
+	mobileS: '375px',
+	mobileM: '425px',
+	mobileL: '768px',
+	tablet: '1024px',
+	laptop: '1440px',
+	laptopL: '1560px',
+};
+
+const device = {
+	mobileS: `(max-width: ${size.mobileS})`,
+	mobileM: `(max-width: ${size.mobileM})`,
+	mobileL: `(max-width: ${size.mobileL})`,
+	tablet: `(max-width: ${size.tablet})`,
+	laptop: `(max-width: ${size.laptop})`,
+	laptopL: `(max-width: ${size.laptopL})`,
+	desktop: `(max-width: ${size.desktop})`,
+	desktopL: `(max-width: ${size.desktop})`,
+};
 const Container = styled.div`
 	position: relative;
 	max-width: 100vw;
@@ -27,6 +46,7 @@ const Container = styled.div`
 		font-size: 15px;
 		justify-content: space-between;
 		width: fit-content;
+		padding: 0;
 		margin: 10px auto;
 		> li {
 			padding: 10px 12px;
@@ -36,6 +56,28 @@ const Container = styled.div`
 		.active {
 			background-color: #ccc;
 			border-radius: 5px;
+		}
+	}
+	@media ${device.tablet} {
+		.shots {
+			display: grid;
+			margin: 0 auto 30px;
+			grid-template-columns: 1fr 1fr;
+		}
+		ul {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 0 40px;
+			overflow-y: scroll;
+			> li {
+				height: fit-content;
+			}
+		}
+	}
+	@media ${device.mobileL} {
+		.shots {
+			display: block;
+			width: 80%;
 		}
 	}
 `;
@@ -53,6 +95,9 @@ class LandingPage extends Component {
 		this.setState({ active: e });
 	};
 	render() {
+		if (!this.props.rootTree.authStore.LoggedInStatus) {
+			return <Redirect to='/login' />;
+		}
 		const navOptions = [
 			'All',
 			'Animations',
@@ -93,10 +138,11 @@ class LandingPage extends Component {
 					</ul>
 				</div>
 				<div className='shots'>
-					{this.props.rootTree.shotsStore.getAllShots.map((shot) => {
-						console.log(shot);
-						return <ShotCard {...shot} />;
-					})}
+					{this.props.rootTree.shotsStore.getAllShots.map(
+						(shot, i) => {
+							return <ShotCard {...shot} key={i} />;
+						}
+					)}
 				</div>
 			</Container>
 		);
